@@ -1,0 +1,15 @@
+<html>
+  <head>
+    <title>Homepage</title>
+  </head>
+  <body>
+    <h1>home</h1>
+
+    <% for (let i = 0; i < messages.length; i++ ) { %> 
+        <div>
+          <h1><%=messages[i].title %></h1>
+            <p><%=messages[i].text %></p>
+        </div>
+      <% } %>
+  </body>
+</html>
