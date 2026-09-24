@@ -3,7 +3,21 @@
     <title>Homepage</title>
   </head>
   <body>
-    <h1>home</h1>
+    <% if (locals.user) {%>
+      <h1>WELCOME BACK <%= user.username %></h1>
+      <a href="/users/log-out">LOG OUT</a>
+    <% } else { %>
+      <h1>please log in</h1>
+      <form action="/users/log-in" method="POST">
+        <label for="username">Username</label>
+        <input id="username" name="username" placeholder="username" type="text" />
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" />
+        <button type="submit">Log In</button>
+      </form>
+    <%}%>
+
+    <br>
 
     <% for (let i = 0; i < messages.length; i++ ) { %> 
         <div>

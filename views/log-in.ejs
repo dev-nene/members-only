@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Log in</title>
+  </head>
+  <body>
+        <% if (errors && errors.length > 0) { %>
+      <ul>
+        <% errors.forEach((error) => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+    
+    <form action="/users/log-in" method="POST">
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username">
+      <br>
+      <label for="password">Password</label>
+      <input type="password" name="password" id="password">
+      <br>
+
+      <button>Log in</button>
+    </form>
+  </body>
+</html>

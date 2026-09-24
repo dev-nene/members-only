@@ -1,12 +1,23 @@
 const { Router } = require("express");
 const indexController = require("../controllers/indexController");
 const validateUser = require("../validators/userValidator");
+const passport = require("../config/passport");
 
 const indexRouter = Router();
 
 indexRouter.get("/", indexController.renderHomePage);
 
 indexRouter.get("/users/sign-up", indexController.renderSignUpForm);
-indexRouter.post("/users/sign-up",validateUser, indexController.signUpUser);
+indexRouter.post("/users/sign-up", validateUser, indexController.signUpUser);
+indexRouter.get("/users/log-in", indexController.renderLoginForm);
+indexRouter.post(
+  "/users/log-in",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/users/log-in",
+    failureMessage: true,
+  }),
+);
+indexRouter.get("/users/log-out", indexController.logOutUser);
 
 module.exports = indexRouter;

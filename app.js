@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const indexRouter = require("./routes/indexRouter");
+const session = require("express-session");
+const passport = require("./config/passport");
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -9,6 +11,8 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: "secret", resave: false, saveUninitialized: false }));
+app.use(passport.session());
 
 app.use("/", indexRouter);
 
