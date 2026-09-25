@@ -94,6 +94,24 @@ async function requireLogin(req, res, next) {
   next();
 }
 
+async function renderMessageForm(req, res) {
+  res.render("message-form", { errors: [] });
+}
+
+async function createMessage(req, res) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.render("message-form", { errors: errors.array() });
+    return;
+  }
+
+  const messageData = matchedData(req);
+
+  await db.createMessage(messageData.title, messageData.text, req.user.id);
+
+  res.redirect("/");
+}
+
 module.exports = {
   renderHomePage,
   renderSignUpForm,
@@ -103,4 +121,6 @@ module.exports = {
   renderClubForm,
   addMembershipToUser,
   requireLogin,
+  renderMessageForm,
+  createMessage,
 };

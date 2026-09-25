@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>Messages</title>
+  </head>
+  <body>
+        <% if (errors && errors.length > 0) { %>
+      <ul>
+        <% errors.forEach((error) => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+    
+    <form action="/messages/new" method="POST">
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title">
+      <br>
+      <label for="text">Text</label>
+      <textarea name="text" id="text"></textarea>
+      <br>
+
+      <button>Send message</button>
+    </form>
+  </body>
+</html>

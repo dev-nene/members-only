@@ -2,6 +2,7 @@ const { Router } = require("express");
 const indexController = require("../controllers/indexController");
 const validateUser = require("../validators/userValidator");
 const passport = require("../config/passport");
+const validateMessage = require("../validators/messageValidator");
 
 const indexRouter = Router();
 
@@ -29,5 +30,9 @@ indexRouter.post(
   indexController.requireLogin,
   indexController.addMembershipToUser,
 );
+
+
+indexRouter.get("/messages/new",indexController.requireLogin, indexController.renderMessageForm)
+indexRouter.post("/messages/new", indexController.requireLogin, validateMessage, indexController.createMessage)
 
 module.exports = indexRouter;

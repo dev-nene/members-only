@@ -1,7 +1,7 @@
 const pool = require("./pool");
 
 async function getAllMessages() {
-  const { rows } = await pool.query("SELECT * FROM messages");
+  const { rows } = await pool.query("SELECT * FROM messages ORDER BY timestamp DESC");
   return rows;
 }
 
@@ -33,10 +33,19 @@ async function addMembershipToUser(id) {
   ]);
 }
 
+async function createMessage(title, text, id) {
+  await pool.query("INSERT INTO messages (title, text, author_id) VALUES ($1, $2, $3)", [
+    title,
+    text,
+    id
+  ]);
+}
+
 module.exports = {
   getAllMessages,
   signUpUser,
   findUserByUsername,
   findUserById,
   addMembershipToUser,
+  createMessage,
 };
