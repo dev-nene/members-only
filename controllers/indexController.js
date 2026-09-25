@@ -6,6 +6,7 @@ require("dotenv").config();
 
 async function renderHomePage(req, res) {
   const messages = await db.getAllMessages();
+  console.log(messages);
   res.render("index", { messages, user: req.user });
 }
 

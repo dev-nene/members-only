@@ -1,7 +1,7 @@
 const pool = require("./pool");
 
 async function getAllMessages() {
-  const { rows } = await pool.query("SELECT * FROM messages ORDER BY timestamp DESC");
+  const { rows } = await pool.query("SELECT * FROM messages JOIN users ON messages.author_id = users.id ORDER BY timestamp DESC");
   return rows;
 }
 
