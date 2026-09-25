@@ -34,5 +34,6 @@ indexRouter.post(
 
 indexRouter.get("/messages/new",indexController.requireLogin, indexController.renderMessageForm)
 indexRouter.post("/messages/new", indexController.requireLogin, validateMessage, indexController.createMessage)
+indexRouter.post("/messages/:id/delete",indexController.requireLogin, indexController.requireAdmin, indexController.deleteMessage )
 
 module.exports = indexRouter;

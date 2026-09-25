@@ -6,7 +6,6 @@ require("dotenv").config();
 
 async function renderHomePage(req, res) {
   const messages = await db.getAllMessages();
-  console.log(messages);
   res.render("index", { messages, user: req.user });
 }
 
@@ -95,6 +94,13 @@ async function requireLogin(req, res, next) {
   next();
 }
 
+async function requireAdmin(req, res, next) {
+  if (!req.user.admin_status) {
+    return res.redirect("/");
+  }
+  next();
+}
+
 async function renderMessageForm(req, res) {
   res.render("message-form", { errors: [] });
 }
@@ -113,6 +119,11 @@ async function createMessage(req, res) {
   res.redirect("/");
 }
 
+async function deleteMessage(req, res) {
+  await db.deleteMessage(req.params.id);
+  res.redirect("/")
+}
+
 module.exports = {
   renderHomePage,
   renderSignUpForm,
@@ -124,4 +135,6 @@ module.exports = {
   requireLogin,
   renderMessageForm,
   createMessage,
+  requireAdmin,
+  deleteMessage,
 };

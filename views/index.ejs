@@ -35,6 +35,12 @@
           <p><%= message.username %></p>
           <p><%= message.timestamp.toLocaleString() %></p>
         <% } %>
+
+        <% if (locals.user && user.admin_status) { %>
+          <form action="/messages/<%= message.id %>/delete" method="POST">
+            <button type="submit">Delete</button>
+          </form>
+        <% } %>
       </div>
     <% } %>
 
