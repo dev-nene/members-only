@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Club</title>
+  </head>
+  <body>
+        <% if (errors && errors.length > 0) { %>
+      <ul>
+        <% errors.forEach((error) => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+    <% } %>
+    
+    <form action="/users/club" method="POST">
+      <label for="passcode">Secret Code:</label>
+      <input type="text" name="passcode" id="passcode">
+      <br>
+      <button>Submit</button>
+    </form>
+  </body>
+</html>

@@ -27,9 +27,16 @@ async function findUserById(id) {
   return rows[0];
 }
 
+async function addMembershipToUser(id) {
+  await pool.query("UPDATE users SET membership_status = true WHERE id = $1", [
+    id,
+  ]);
+}
+
 module.exports = {
   getAllMessages,
   signUpUser,
   findUserByUsername,
   findUserById,
+  addMembershipToUser,
 };

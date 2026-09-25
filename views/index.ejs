@@ -6,6 +6,13 @@
     <% if (locals.user) {%>
       <h1>WELCOME BACK <%= user.username %></h1>
       <a href="/users/log-out">LOG OUT</a>
+
+      <% if (!user.membership_status) { %> 
+          <br>
+          <a href="/users/club">Join club</a>
+      <% } %>
+      <br>
+      <a href="/messages/new">Create new message</a>
     <% } else { %>
       <h1>please log in</h1>
       <form action="/users/log-in" method="POST">

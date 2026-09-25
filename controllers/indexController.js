@@ -2,6 +2,7 @@ const db = require("../db/queries");
 const { validationResult, matchedData } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const passport = require("../config/passport");
+require("dotenv").config();
 
 async function renderHomePage(req, res) {
   const messages = await db.getAllMessages();
@@ -37,6 +38,7 @@ async function signUpUser(req, res, next) {
         user: {},
       });
     }
+    return next(error);
   }
 
   res.redirect("/users/log-in");
@@ -61,10 +63,44 @@ async function logOutUser(req, res, next) {
   });
 }
 
+async function renderClubForm(req, res) {
+  res.render("club-form", { errors: [] });
+}
+
+async function addMembershipToUser(req, res) {
+  const clubSecret = process.env.clubSecret;
+
+  if (!clubSecret) {
+    throw new Error("Club passcode is not configured");
+  }
+
+  if (
+    typeof req.body.passcode === "string" &&
+    req.body.passcode === clubSecret
+  ) {
+    await db.addMembershipToUser(req.user.id);
+    return res.redirect("/");
+  }
+
+  return res.render("club-form", {
+    errors: [{ msg: "Incorrect code" }],
+  });
+}
+
+async function requireLogin(req, res, next) {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/users/log-in");
+  }
+  next();
+}
+
 module.exports = {
   renderHomePage,
   renderSignUpForm,
   signUpUser,
   renderLoginForm,
   logOutUser,
+  renderClubForm,
+  addMembershipToUser,
+  requireLogin,
 };

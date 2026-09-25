@@ -19,5 +19,15 @@ indexRouter.post(
   }),
 );
 indexRouter.get("/users/log-out", indexController.logOutUser);
+indexRouter.get(
+  "/users/club",
+  indexController.requireLogin,
+  indexController.renderClubForm,
+);
+indexRouter.post(
+  "/users/club",
+  indexController.requireLogin,
+  indexController.addMembershipToUser,
+);
 
 module.exports = indexRouter;
